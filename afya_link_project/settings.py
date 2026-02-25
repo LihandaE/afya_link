@@ -38,7 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'afya_link_app',
+    'accounts',
+    'hospitals',
+    'patients',
+    'doctors',
+    'appointments',
+    'records',
+    'consent',
+
 ]
 
 MIDDLEWARE = [
@@ -70,8 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'afya_link_project.wsgi.application'
 
-AUTH_USER_MODEL = 'accounts.User'
-
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
@@ -82,7 +87,7 @@ DATABASES = {
         'NAME': config('DATABASE_NAME'),
         'USER': config('DATABASE_USER'),
         'PASSWORD': config('DATABASE_PASSWORD'),
-        'HOST': config('DATAVASE_HOST'),
+        'HOST': config('DATABASE_HOST'),
         'PORT': config('DATABASE_PORT'),
     }
 }
