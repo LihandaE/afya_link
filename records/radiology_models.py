@@ -4,7 +4,7 @@ from cloudinary.models import CloudinaryField
 
 class RadiologyRecord(models.Model):
     visit=models.ForeignKey(
-        'appointments.visit',
+        'patients.Visit',
         on_delete=models.CASCADE,
         related_name='radiology_records'
     )

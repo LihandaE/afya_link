@@ -4,7 +4,7 @@ from django.db import models
 class Prescription(models.Model):
 
     visit = models.ForeignKey(
-        "appointments.Visit",
+        "patients.Visit",
         on_delete=models.CASCADE,
         related_name="prescriptions"
     )
