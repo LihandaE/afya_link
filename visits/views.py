@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .models import Visit
 from .serializers import VisitSerializer
-from .permissions import IsHospitalStaff
+from accounts.permissions import IsHospitalStaff
 
 
 class VisitViewSet(viewsets.ModelViewSet):
