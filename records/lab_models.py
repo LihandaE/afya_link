@@ -5,7 +5,7 @@ from cloudinary.models import CloudinaryField
 class LabRecord(models.Model):
 
     visit= models.ForeignKey(
-        'patients.Visit',
+        'visits.Visit',
         on_delete=models.CASCADE,
         related_name='lab_records'
     )

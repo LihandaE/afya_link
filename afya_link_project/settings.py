@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'appointments',
     'records',
     'consent',
+    'visits',
     'rest_framework',
     'corsheaders',
 
