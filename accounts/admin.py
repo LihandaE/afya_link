@@ -16,7 +16,6 @@ class UserAdmin(BaseUserAdmin):
         "email",
         "first_name",
         "last_name",
-        "role",
         "hospital",
         "is_staff",
         "is_active",
@@ -71,4 +70,3 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
-admin.site.register(User, UserAdmin)
