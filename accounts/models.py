@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from patients.models import PatientProfile
 
 
 class UserManager(BaseUserManager):
@@ -62,3 +65,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.email} ({self.role})"
     
+
+@receiver(post_save, sender=User)
+def create_patient_profile(sender, instance, created, **kwargs):
+    if created and instance.role == "patient":
+        PatientProfile.objects.create(user=instance)

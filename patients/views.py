@@ -1,20 +1,17 @@
-from django.shortcuts import render
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from .models import Patient
-from .serializers import PatientSerializer
-from accounts.permissions import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import PatientRegistrationSerializer
 
 
-class PatientViewSet(viewsets.ModelViewSet):
-    queryset = Patient.objects.all()
-    serializer_class = PatientSerializer
-    permission_classes = [IsAuthenticated]
+class PatientRegisterView(APIView):
 
-    permission_classes = [IsReceptionist | IsHospitalAdmin | IsSuperAdmin]
+    permission_classes = []
 
-    def get_queryset(self):
-        if self.request.user.role == "super_admin":
-            return Patient.objects.all()
-        return Patient.objects.filter(visits__hospital=self.request.user.hospital)
+    def post(self, request):
+        serializer = PatientRegistrationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Patient registered successfully"})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
