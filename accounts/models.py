@@ -1,5 +1,3 @@
-# Create your models here.
-
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
@@ -18,10 +16,9 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("role", "super_admin")
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("role", "super_admin")
-
         return self.create_user(email, password, **extra_fields)
 
 
@@ -37,11 +34,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         ("radiologist", "Radiologist"),
         ("pharmacist", "Pharmacist"),
         ("receptionist", "Receptionist"),
+        ("patient", "Patient"),
     )
 
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+
     role = models.CharField(max_length=30, choices=ROLE_CHOICES)
 
     hospital = models.ForeignKey(
@@ -61,4 +60,5 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.email
+        return f"{self.email} ({self.role})"
+    
