@@ -9,6 +9,10 @@ class IsHospitalAdmin(BasePermission):
     def has_permission(self, request, view):
         return request.user.role == 'hospital_admin'
     
+class IsReceptionist(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.role == 'receptionist'
+    
 class IsDoctor(BasePermission):
     def has_permission(self, request, view):
         return request.user.role in['doctor', 'consultant']
@@ -23,7 +27,7 @@ class IsPharmacist(BasePermission):
 
 class IsLabTech(BasePermission):
     def has_permission(self, request, view):
-        return request.user.role == 'Lab_tech'
+        return request.user.role == 'lab_tech'
 
 class IsRadiologist(BasePermission):
     def has_permission(self, request, view):
