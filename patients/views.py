@@ -1,17 +1,22 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .serializers import PatientRegistrationSerializer
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from .models import PatientProfile
+from .serializers import *
 
 
-class PatientRegisterView(APIView):
+class PatientProfileViewSet(viewsets.ModelViewSet):
 
-    permission_classes = []
+    queryset = PatientProfile.objects.all()
+    serializer_class = PatientRegistrationSerializer
+    permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        serializer = PatientRegistrationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "Patient registered successfully"})
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_queryset(self):
+        user = self.request.user
+
+        # Patient sees only their profile
+        if user.role == "patient":
+            return PatientProfile.objects.filter(user=user)
+
+        # Hospital staff see patients linked to their hospital visits
+        return PatientProfile.objects.all()
 

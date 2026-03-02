@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 class AccessConsent(models.Model):
-    patient = models.ForeignKey("patients.Patient", on_delete=models.CASCADE)
+    patient = models.ForeignKey("patients.PatientProfile", on_delete=models.CASCADE)
     requesting_hospital = models.ForeignKey("hospitals.Hospital", on_delete=models.CASCADE)
 
     otp = models.CharField(max_length=6)

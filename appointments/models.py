@@ -10,7 +10,7 @@ class Appointment(models.Model):
         ('cancelled', 'Cancelled'),
 
     )
-    patient= models.ForeignKey('patients.Patient', on_delete=models.CASCADE)
+    patient= models.ForeignKey('patients.PatientProfile', on_delete=models.CASCADE)
     hospital= models.ForeignKey('hospitals.Hospital', on_delete=models.CASCADE)
     speciality= models.ForeignKey('doctors.Speciality', on_delete=models.SET_NULL, null=True)
     doctor= models.ForeignKey('doctors.Doctor', on_delete=models.SET_NULL,null=True)

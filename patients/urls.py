@@ -1,8 +1,8 @@
 from rest_framework.routers import DefaultRouter
-from .views import PatientViewSet
+from .views import PatientProfileViewSet
 
-router= DefaultRouter()
-router.register(r"", PatientViewSet, basename="patients")
+router = DefaultRouter()
+router.register("", PatientProfileViewSet)
 
-urlpatterns =router.urls
+urlpatterns = router.urls
 

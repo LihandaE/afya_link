@@ -13,7 +13,7 @@ class Visit(models.Model):
     )
 
     patient = models.ForeignKey(
-        "patients.Patient",
+        "patients.PatientProfile",
         on_delete=models.CASCADE,
         related_name="visits"
     )
