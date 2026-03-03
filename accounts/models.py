@@ -65,8 +65,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.email} ({self.role})"
     
-
-@receiver(post_save, sender=User)
-def create_patient_profile(sender, instance, created, **kwargs):
-    if created and instance.role == "patient":
-        PatientProfile.objects.create(user=instance)

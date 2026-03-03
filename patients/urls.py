@@ -2,7 +2,7 @@ from rest_framework.routers import DefaultRouter
 from .views import PatientProfileViewSet
 
 router = DefaultRouter()
-router.register("", PatientProfileViewSet)
+router.register("", PatientProfileViewSet,basename='patients')
 
 urlpatterns = router.urls
 
