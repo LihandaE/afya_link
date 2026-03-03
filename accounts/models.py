@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
-    role = models.CharField(max_length=30, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=30, choices=ROLE_CHOICES, default="patient")
 
     hospital = models.ForeignKey(
         "hospitals.Hospital",
