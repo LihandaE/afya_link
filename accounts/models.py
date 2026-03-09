@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from patients.models import PatientProfile
 
 
 class UserManager(BaseUserManager):
@@ -28,23 +25,24 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
 
     ROLE_CHOICES = (
-        ("super_admin", "Super Admin"),
-        ("hospital_admin", "Hospital Admin"),
+        ("superadmin", "Super Admin"),
+        ("hospitaladmin", "Hospital Admin"),
         ("doctor", "Doctor"),
         ("consultant", "Consultant"),
         ("nurse", "Nurse"),
-        ("lab_tech", "Lab Tech"),
+        ("labtech", "Lab Tech"),
         ("radiologist", "Radiologist"),
         ("pharmacist", "Pharmacist"),
         ("receptionist", "Receptionist"),
         ("patient", "Patient"),
     )
 
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, blank=False, null=False)
+    username= None
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
-    role = models.CharField(max_length=30, choices=ROLE_CHOICES, default="patient")
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default="patient")
 
     hospital = models.ForeignKey(
         "hospitals.Hospital",
@@ -63,4 +61,24 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return f"{self.email} ({self.role})"  
+        return self.email
+    
+    def is_doctor(self):
+        return self.role in ['doctor', 'consultant']
+    def is_nurse(self):
+        return self.role == 'nurse'
+    def is_pharmacist(self):
+        return self.role == 'pharmacist'
+    def is_lab_tech(self):
+        return self.role == 'labtech'
+    def is_radiologist(self):
+        return self.role == 'radiologist'
+    def is_hospital_admin(self):
+        return self.role in ['superadmin', 'hospitaladmin']
+    def is_receptionist(self):
+        return self.role == 'receptionist'
+    def is_patient(self):
+        return self.role == 'patient'
+    def is_super_admin(self):
+        return self.role == 'superadmin'
+    
