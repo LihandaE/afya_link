@@ -54,7 +54,7 @@ This profile stores medical identity information separate from authentication.
 Structure:
 
 User (authentication)
-    └── PatientProfile (medical identity)
+-PatientProfile (medical identity)
 
 This separation improves security and data organization.
 
@@ -83,38 +83,151 @@ This ensures hospitals maintain control over their workforce.
 ## Technology Stack
 
 1.Backend Framework
- Django
+ - Django
 2. API Framework
- Django REST Framework
+ - Django REST Framework
 3. Authentication
- JWT (SimpleJWT)
+ - JWT (SimpleJWT)
 4.Database
-PostgreSQL (recommended)
+- PostgreSQL (recommended)
 5.Media Storage
-Cloudinary
+- Cloudinary
 6.Testing
-Postman
+- Postman
 7.Development Tools
-Python Virtual Environment
-Visual Studio Code
+- Python Virtual Environment
+- Visual Studio Code
+
+## Installation
+1.Clone the repository
+```
+git clone https://github.com/LihandaE/afyalink-backend.git
+cd afyalink-backend
+```
+
+2 Create a virtual environment
+```
+python -m venv venv
+```
+Activate environment:
+- Linux / Mac
+```
+source venv/bin/activate
+```
+-Windows
+```
+venv\Scripts\activate
+```
+3 Install dependencies
+```
+pip install -r requirements.txt
+```
+4 Apply migrations
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+5 Create a superuser
+```
+python manage.py createsuperuser
+```
+6 Run the server
+```
+python manage.py runserver
+```
+Server will run 
+
+
+## Authentication
+1. Obtain JWT token
+```
+POST /api/v1/auth/token/
+```
+
+Example request
+```
+{
+  "email": "admin@hospital.com",
+  "password": "password123"
+}
+```
+2. Refresh Token
+```
+POST /api/v1/auth/token/refresh/
+```
+
+3. Use token in headers
+```
+Authorization: Bearer <your_token>
+```
+
+## API Endpoints
+
+| Endpoint | Method | Description | Role Required |
+|----------|--------|-------------|---------------|
+| `/api/v1/auth/token/` | POST | Obtain JWT access and refresh tokens | Any user |
+| `/api/v1/auth/token/refresh/` | POST | Refresh JWT access token | Authenticated |
+| `/api/v1/accounts/` | GET, POST | Manage system users | Super Admin |
+| `/api/v1/hospitals/` | GET, POST | Manage hospitals | Super Admin |
+| `/api/v1/doctors/` | GET, POST | Manage doctor profiles | Hospital Admin |
+| `/api/v1/patients/` | GET, POST | Manage patient profiles | Hospital Staff |
+| `/api/v1/appointments/` | GET, POST | Manage doctor appointments | Hospital Staff |
+| `/api/v1/records/` | GET, POST | Manage medical records (lab, radiology, diagnosis, prescriptions) | Medical Staff |
+| `/api/v1/consent/` | GET, POST | Manage patient data access consent | Patient / Hospital |
+| `/api/v1/visits/` | GET, POST | Track patient hospital visits | Hospital Staff |
+
+
+
+## Testing
+API endpoints can be tested using Postman.
+- Example workflow:
+- Obtain JWT token
+- Create hospital
+- Register hospital staff
+- Register patient
+- Create patient visit
+- Record diagnosis
+- Upload lab or radiology report
+- Issue prescription
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+```
+git checkout -b feature-name
+```
+3. Commit changes
+```
+git commit -m "Add feature"
+```
+4. Push changes
+```
+git push origin feature-name
+```
+5. Open a Pull Request
 
 ## Security Considerations
 AfyaLink implements several security practices:
-JWT authentication
-Role-based permissions
-Hospital data isolation
-Controlled staff creation
-Protected API endpoints
-Secure media storage
+- JWT authentication
+- Role-based permissions
+- Hospital data isolation
+- Controlled staff creation
+- Protected API endpoints
+- Secure media storage
 
 ## Future Improvements
 Planned system upgrades include:
-React frontend dashboard
-Patient mobile application
-Real-time notifications
-National health data interoperability
-Electronic health record (EHR) standards integration
-AI-assisted clinical decision support
+- React frontend dashboard
+- Patient mobile application
+- Real-time notifications
+- National health data interoperability
+- Electronic health record (EHR) standards integration
+- AI-assisted clinical decision support
 ## Author
 Emmanuel Musungu
-+254796285410
+- Phone no : +254796285410
+- Email - emmanuelihanda@gmail.com
+
+## License
+This project is licensed under the MIT License.
