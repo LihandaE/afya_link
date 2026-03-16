@@ -1,0 +1,9 @@
+export const saveToken = (token)=>{
+    localStorage.setItem('access',token)
+}
+export const getToken = ()=>{
+    return localStorage.getItem('access')
+}
+export const removeToken= ()=>{
+    localStorage.removeItem('access')
+}
